@@ -1,5 +1,50 @@
 import React, { useState, useRef, useEffect } from 'react';
 
+import Webcam from 'react-webcam';
+import * as faceapi from 'face-api.js';
+
+const AiCamera = () => {
+  const [faceDetected, setFaceDetected] = useState(false);
+
+  useEffect(() => {
+    let video;
+    const initFaceDetection = async () => {
+      video = document.getElementById('inputVideo');
+      await faceapi.nets.tinyFaceDetector.loadFromUri('/models');
+      const displaySize = { width: video.width, height: video.height };
+      faceapi.matchDimensions(video, displaySize);
+
+      setInterval(async () => {
+        const detections = await faceapi.detectAllFaces(video, new faceapi.TinyFaceDetectorOptions());
+        if (detections.length > 0) {
+          setFaceDetected(true);
+        } else {
+          setFaceDetected(false);
+        }
+      }, 1000); // Check every second
+    };
+
+    const handleVideoLoaded = () => {
+      initFaceDetection();
+    };
+
+    return () => {
+      if (video) {
+        video.removeEventListener('loadeddata', handleVideoLoaded);
+      }
+    };
+  }, []);
+
+  return (
+    <div>
+      {faceDetected ? <p>User is well-positioned</p> : <p>Please position your face in the camera frame</p>}
+      <Webcam onLoadedData={() => console.log('Video loaded')} />
+    </div>
+  );
+};
+
+
+
 const MyCamera = () => {
   const [imageData, setImageData] = useState(null);
   const videoRef = useRef(null);
@@ -47,6 +92,9 @@ const MyCamera = () => {
       {imageData && (
         <img src={imageData} alt="Captured Image" />
       )}
+
+
+      <AiCamera></AiCamera>
     </div>
   );
 };
