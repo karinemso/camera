@@ -45,7 +45,7 @@ const MyCamera = () => {
       {/* Canvas positioned on top with opacity for visibility */}
       
      {enabledCamera? <div style={{ width: '80%', height: 480 , border:"10px solid purple", borderRadius:'10px', position:'relative'}}>
-      <div style={{width:'200px', height:'250px', borderRadius:'100%', border:"5px solid purple", position:'absolute', top:'calc(50% - 150px )', right:'calc(50% - 100px )'}}></div>
+      {/* <div style={{width:'200px', height:'250px', borderRadius:'100%', border:"5px solid purple", position:'absolute', top:'calc(50% - 150px )', right:'calc(50% - 100px )'}}></div> */}
       <video ref={videoRef} autoPlay muted style={{ width: '100%', color: 'white', borderRadius: '10px' }} />
       </div> :
      
