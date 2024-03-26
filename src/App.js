@@ -2,37 +2,24 @@ import React, { useState, useRef, useEffect } from 'react';
 
 const MyCamera = () => {
   const [imageData, setImageData] = useState(null);
+  const [enabledCamera, setEnabledCamera] = useState(null)
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
 
   const accessCamera = async () => {
     try {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+      console.log(stream)
       videoRef.current.srcObject = stream;
+      setEnabledCamera(true)
     } catch (error) {
+
+      setEnabledCamera(true)
       console.error('Error accessing camera:', error);
     }
   };
 
-  const drawFaceGuide = () => {
-    const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
 
-    const faceWidth = canvas.width * 0.8; // Adjust size as needed
-    const faceHeight = faceWidth * 1.5;
-    const faceX = (canvas.width - faceWidth) / 2;
-    const faceY = (canvas.height - faceHeight) / 2;
-
-    context.strokeStyle = '#0000FF'; // Adjust color as needed
-    context.lineWidth = 2;
-    context.beginPath();
-    context.moveTo(faceX, faceY);
-    context.lineTo(faceX + faceWidth, faceY);
-    context.lineTo(faceX + faceWidth, faceY + faceHeight);
-    context.lineTo(faceX, faceY + faceHeight);
-    context.closePath();
-    context.stroke();
-  };
 
   const takePicture = async () => {
     const canvas = document.createElement('canvas');
@@ -51,18 +38,19 @@ const MyCamera = () => {
     accessCamera();
   }, []);
 
-  useEffect(() => {
-    if (videoRef.current && canvasRef.current) {
-      drawFaceGuide();
-    }
-  }, [videoRef, canvasRef]);
+
 
   return (
-    <div>
+    <div style={{width:"100%", height:'100%', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center'}}>
       {/* Canvas positioned on top with opacity for visibility */}
-      <canvas ref={canvasRef} width={640} height={480} style={{ position: 'absolute', top: 0, left: 0, opacity: 0.8 , borderRadius:'10px', border: '10px solid purple', maxWidth:'90%'}} />
-      <video ref={videoRef} autoPlay muted style={{ width: 640, height: 480, backgroundColor:'purple', color: 'white', borderRadius: '10px' }} />
-      <button onClick={takePicture}>Take Picture</button>
+      
+     {enabledCamera? <div style={{ width: '80%', height: 480 , border:"10px solid purple", borderRadius:'10px', position:'relative'}}>
+      <div style={{width:'200px', height:'250px', borderRadius:'100%', border:"5px solid purple", position:'absolute', top:'calc(50% - 150px )', right:'calc(50% - 100px )'}}></div>
+      <video ref={videoRef} autoPlay muted style={{ width: '100%', color: 'white', borderRadius: '10px' }} />
+      </div> :
+     
+     "Não conseguimos acessar sua câmera!"}
+      <button onClick={takePicture} disabled={!enabledCamera}>Take Picture</button>
       {imageData && (
         <img src={imageData} alt="Captured Image" />
       )}
