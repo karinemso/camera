@@ -23,7 +23,7 @@ const MyCamera = () => {
     const faceX = (canvas.width - faceWidth) / 2;
     const faceY = (canvas.height - faceHeight) / 2;
 
-    context.strokeStyle = '#0000FF';
+    context.strokeStyle = '#0000FF'; // Adjust color as needed
     context.lineWidth = 2;
     context.beginPath();
     context.moveTo(faceX, faceY);
@@ -59,9 +59,10 @@ const MyCamera = () => {
 
   return (
     <div>
-      <video ref={videoRef} autoPlay muted style={{ width: 640, height: 480, borderRadius:'10px', border: '10px solid purple', maxWidth:'90%'}} />
-      <canvas ref={canvasRef} width={640} height={480} />
-      <button style={{backgroundColor:'purple', color: 'white', borderRadius: '10px'}} onClick={takePicture}>Take Picture</button>
+      {/* Canvas positioned on top with opacity for visibility */}
+      <canvas ref={canvasRef} width={640} height={480} style={{ position: 'absolute', top: 0, left: 0, opacity: 0.8 , borderRadius:'10px', border: '10px solid purple', maxWidth:'90%'}} />
+      <video ref={videoRef} autoPlay muted style={{ width: 640, height: 480, backgroundColor:'purple', color: 'white', borderRadius: '10px' }} />
+      <button onClick={takePicture}>Take Picture</button>
       {imageData && (
         <img src={imageData} alt="Captured Image" />
       )}
@@ -70,3 +71,7 @@ const MyCamera = () => {
 };
 
 export default MyCamera;
+
+
+// style={{backgroundColor:'purple', color: 'white', borderRadius: '10px'}}
+// style={{ width: 640, height: 480, borderRadius:'10px', border: '10px solid purple', maxWidth:'90%'}}
