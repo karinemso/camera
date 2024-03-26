@@ -48,8 +48,7 @@ const MyCamera = () => {
     >
       {/* Canvas positioned on top with opacity for visibility */}
 
-      {exists && (
-        
+      && (        
           <video
             ref={videoRef}
             autoPlay
@@ -65,9 +64,9 @@ const MyCamera = () => {
 
           
       
-      )}
+    
 
-      {exists && <button onClick={takePicture}>Take Picture</button>}
+     && <button onClick={takePicture}>Take Picture</button>
       {!exists && (
         <p>Acesse a validação por meio do seu dispositivo celular!</p>
       )}
