@@ -2,7 +2,6 @@ import React, { useState, useRef, useEffect } from 'react';
 
 const MyCamera = () => {
   const [imageData, setImageData] = useState(null);
-  const [enabledCamera, setEnabledCamera] = useState(null)
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
 
@@ -11,10 +10,8 @@ const MyCamera = () => {
       const stream = await navigator.mediaDevices.getUserMedia({ video: true });
       console.log(stream)
       videoRef.current.srcObject = stream;
-      setEnabledCamera(true)
     } catch (error) {
-
-      setEnabledCamera(true)
+      videoRef.current.srcObject
       console.error('Error accessing camera:', error);
     }
   };
@@ -41,13 +38,13 @@ const MyCamera = () => {
 
 
   return (
-    <div style={{width:"100%", height:'100%', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center'}}>
+    <div style={{width:"100vw", height:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center'}}>
       {/* Canvas positioned on top with opacity for visibility */}
       
-     {enabledCamera && <video ref={videoRef} autoPlay muted style={{ width: '100%', color: 'white', borderRadius: '10px' }} />}
+     {videoRef? <video ref={videoRef} autoPlay muted style={{ width: 640, height: 480, backgroundColor:'purple', color: 'white', borderRadius: '10px' }} /> :
      
      "Não conseguimos acessar sua câmera!"}
-      <button onClick={takePicture} disabled={!enabledCamera}>Take Picture</button>
+      <button onClick={takePicture}>Take Picture</button>
       {imageData && (
         <img src={imageData} alt="Captured Image" />
       )}
