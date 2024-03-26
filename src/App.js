@@ -44,10 +44,7 @@ const MyCamera = () => {
     <div style={{width:"100%", height:'100%', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center'}}>
       {/* Canvas positioned on top with opacity for visibility */}
       
-     {enabledCamera? <div style={{ width: '80%', height: 480 , border:"10px solid purple", borderRadius:'10px', position:'relative'}}>
-      {/* <div style={{width:'200px', height:'250px', borderRadius:'100%', border:"5px solid purple", position:'absolute', top:'calc(50% - 150px )', right:'calc(50% - 100px )'}}></div> */}
-      <video ref={videoRef} autoPlay muted style={{ width: '100%', color: 'white', borderRadius: '10px' }} />
-      </div> :
+     {enabledCamera && <video ref={videoRef} autoPlay muted style={{ width: '100%', color: 'white', borderRadius: '10px' }} />:
      
      "Não conseguimos acessar sua câmera!"}
       <button onClick={takePicture} disabled={!enabledCamera}>Take Picture</button>
