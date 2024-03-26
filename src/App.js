@@ -11,7 +11,7 @@ const MyCamera = () => {
       console.log(stream)
       videoRef.current.srcObject = stream;
     } catch (error) {
-      videoRef.current.srcObject
+  
       console.error('Error accessing camera:', error);
     }
   };
