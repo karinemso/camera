@@ -41,9 +41,8 @@ const MyCamera = () => {
     <div style={{width:"100vw", height:'100vh', display:'flex', flexDirection:'column', alignItems:'center', justifyContent:'center'}}>
       {/* Canvas positioned on top with opacity for visibility */}
       
-     {videoRef? <video ref={videoRef} autoPlay muted style={{ width: 640, height: 480, backgroundColor:'purple', color: 'white', borderRadius: '10px' }} /> :
-     
-     "Não conseguimos acessar sua câmera!"}
+     <video ref={videoRef} autoPlay muted style={{ width: 640, height: 480, backgroundColor:'purple', color: 'white', borderRadius: '10px' }} /> 
+    
       <button onClick={takePicture}>Take Picture</button>
       {imageData && (
         <img src={imageData} alt="Captured Image" />
